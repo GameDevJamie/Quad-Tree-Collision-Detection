@@ -73,6 +73,9 @@ namespace Genesis
 					m_CurrentLayer = currentLayer;
 
 					m_Divided = false;
+
+					m_EnumStart = false;
+					m_EndOfEnum = false;
 				}
 
 				//Destroy the QuadTree and Free Memory
@@ -225,21 +228,28 @@ namespace Genesis
 
 				bool Enumerate(std::vector<SQuadTreeNode<T>> &list)
 				{
-					if (!m_EnumStart) return false;
-					if (m_EndOfEnum) return false;
-					if (m_List.size() == 0) return false;
+					if (!m_EnumStart) return false;	//BeginEnum() has not been called
+					if (m_EndOfEnum) return false;	//End of Enumeration for this Tree (Already Enumerated)
+					
 
-					if (!m_Divided)
+					if (m_List.size() == 0 && !m_Divided)
+					{
+						m_EndOfEnum = true;
+						return false;
+					}
+					if (m_List.size() == 0 && m_Divided)
+					{
+						if (mp_TopLeft->Enumerate(list)) return true;
+						if (mp_TopRight->Enumerate(list)) return true;
+						if (mp_BottomLeft->Enumerate(list)) return true;
+						if (mp_BottomRight->Enumerate(list)) return true;
+					}
+					if (m_List.size() != 0)
 					{
 						list = m_List;
 						m_EndOfEnum = true;
 						return true;
 					}
-
-					if (mp_TopLeft->Enumerate(list)) return true;
-					if (mp_TopRight->Enumerate(list)) return true;
-					if (mp_BottomLeft->Enumerate(list)) return true;
-					if (mp_BottomRight->Enumerate(list)) return true;
 
 					m_EndOfEnum = true;
 					return false;

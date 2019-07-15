@@ -10,8 +10,6 @@ using namespace Genesis::entity;
 class QuadTreeBuilderSystem : public WorldSystem
 {
 	private:
-		std::unique_ptr<math::QuadTree<TEntityUID>> mp_Tree;	//TODO: MOVE TO GLOBAL COMPONENT
-
 		Entity m_TerrainEntity;
 		EntityList m_Entities;
 
@@ -32,13 +30,9 @@ class QuadTreeBuilderSystem : public WorldSystem
 
 			m_Draw = true;
 
-			mp_Tree = std::make_unique<math::QuadTree<TEntityUID>>(math::Vector2::kZero, 50.0f * 2.0f, 8, 2);
-
 			auto globalData = world.GetEntityManager()->GetComponent<GlobalComponentData>();
 			globalData->GUIBar->AddVarRW("Max Layers", EType::INT32, &m_MaxLayers, "group='Quad Tree Data'");
 			globalData->GUIBar->AddVarRW("Draw Tree", EType::BOOL, &m_Draw, "group='Quad Tree Data'");
-
-
 
 			ComponentGroup group;
 			group.AddFilter<TravellerComponentData>();
@@ -58,8 +52,10 @@ class QuadTreeBuilderSystem : public WorldSystem
 		//Called when the System is Updated (Per Frame)
 		virtual void Update(const World& world, TFloat32 deltaTime)
 		{
+			auto qTree = world.GetEntityManager()->GetComponent<GlobalComponentData>()->QuadTree.get();
+
 			//Clear QuadTree
-			mp_Tree->Reset();
+			qTree->Reset();
 
 			//Update QuadTree
 			for(auto it = m_Entities.begin(); it < m_Entities.end(); it++)
@@ -67,7 +63,7 @@ class QuadTreeBuilderSystem : public WorldSystem
 				Entity entity = (*it);
 
 				auto pos = world.GetEntityManager()->GetComponent<TransformComponentData>(entity)->GetTransform().GetPosition();
-				mp_Tree->Insert(math::SQuadTreeNode<TEntityUID>(entity.UID, math::Vector2(pos.x, pos.z)));
+				qTree->Insert(math::SQuadTreeNode<TEntityUID>(entity.UID, math::Vector2(pos.x, pos.z)));
 			}
 
 			if (m_Draw)
@@ -75,7 +71,7 @@ class QuadTreeBuilderSystem : public WorldSystem
 				auto terrainComp = world.GetEntityManager()->GetComponent<TerrainGridComponentData>(m_TerrainEntity);
 				
 				terrainComp->GetTerrain()->IsVisible(true);
-				terrainComp->GetTerrain()->UpdateGrid(mp_Tree.get());
+				terrainComp->GetTerrain()->UpdateGrid(qTree);
 			}
 			else
 			{

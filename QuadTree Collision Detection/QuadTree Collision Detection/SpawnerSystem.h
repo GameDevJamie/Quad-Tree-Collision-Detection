@@ -87,7 +87,7 @@ class SpawnerSystem : public WorldSystem
 
 			Entity entity = EntityManager->CreateEntity();
 			EntityManager->AddComponent<TransformComponentData>(entity, pos);
-			EntityManager->AddComponent<StaticMeshComponentData>(entity, world.GetRenderer()->LoadMesh(render::EMeshPrimitiveTypes::CUBE))->SetCustomMaterial(0, world.GetRenderer()->LoadMaterial("NonCollidedMat"));
+			EntityManager->AddComponent<StaticMeshComponentData>(entity, world.GetRenderer()->LoadMesh(render::EMeshPrimitiveTypes::SPHERE))->SetCustomMaterial(0, world.GetRenderer()->LoadMaterial("NonCollidedMat"));
 			
 			auto travellerData = EntityManager->AddComponent<TravellerComponentData>(entity);
 			travellerData->PointA = pos;

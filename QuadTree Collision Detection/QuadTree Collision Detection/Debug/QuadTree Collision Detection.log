@@ -1,18 +1,20 @@
 ﻿  main.cpp
-d:\documents\repositories\quadtree collision detection\quadtree collision detection\collisionsystem.h(50): warning C4018: '<': signed/unsigned mismatch
-d:\documents\repositories\quadtree collision detection\quadtree collision detection\collisionsystem.h(61): warning C4018: '<': signed/unsigned mismatch
-d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(175): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
-  d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(164): note: while compiling class template member function 'void Genesis::math::QuadTree<TEntityUID>::SubDivide(void)'
-  d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(156): note: see reference to function template instantiation 'void Genesis::math::QuadTree<TEntityUID>::SubDivide(void)' being compiled
-  d:\documents\repositories\quadtree collision detection\quadtree collision detection\quadtreebuildersystem.h(62): note: see reference to class template instantiation 'Genesis::math::QuadTree<TEntityUID>' being compiled
-d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(176): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
-d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(177): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
-d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(178): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
-d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(70): warning C4244: '=': conversion from 'const TInt32' to 'TFloat32', possible loss of data
-  d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(60): note: while compiling class template member function 'Genesis::math::QuadTree<TEntityUID>::QuadTree(const Genesis::math::Vector2 &,const TFloat32 &,const TInt32 &,const TInt32 &,const TInt32 &)'
-  d:\documents\repositories\quadtree collision detection\genesis\include\math\quadtree.h(175): note: see reference to function template instantiation 'Genesis::math::QuadTree<TEntityUID>::QuadTree(const Genesis::math::Vector2 &,const TFloat32 &,const TInt32 &,const TInt32 &,const TInt32 &)' being compiled
-  QuadTree Collision Detection.vcxproj -> D:\Documents\Repositories\QuadTree Collision Detection\Debug\QuadTree Collision Detection.exe
-  QuadTree Collision Detection.vcxproj -> D:\Documents\Repositories\QuadTree Collision Detection\Debug\QuadTree Collision Detection.pdb (Partial PDB)
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(51): warning C4018: '<': signed/unsigned mismatch
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(62): warning C4018: '<': signed/unsigned mismatch
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(95): warning C4018: '<': signed/unsigned mismatch
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(105): warning C4018: '<': signed/unsigned mismatch
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(178): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
+  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(167): note: while compiling class template member function 'void Genesis::math::QuadTree<TEntityUID>::SubDivide(void)'
+  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(159): note: see reference to function template instantiation 'void Genesis::math::QuadTree<TEntityUID>::SubDivide(void)' being compiled
+  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(90): note: see reference to class template instantiation 'Genesis::math::QuadTree<TEntityUID>' being compiled
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(179): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(180): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(181): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(70): warning C4244: '=': conversion from 'const TInt32' to 'TFloat32', possible loss of data
+  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(60): note: while compiling class template member function 'Genesis::math::QuadTree<TEntityUID>::QuadTree(const Genesis::math::Vector2 &,const TFloat32 &,const TInt32 &,const TInt32 &,const TInt32 &)'
+  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(178): note: see reference to function template instantiation 'Genesis::math::QuadTree<TEntityUID>::QuadTree(const Genesis::math::Vector2 &,const TFloat32 &,const TInt32 &,const TInt32 &,const TInt32 &)' being compiled
+  QuadTree Collision Detection.vcxproj -> D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Debug\QuadTree Collision Detection.exe
+  QuadTree Collision Detection.vcxproj -> D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Debug\QuadTree Collision Detection.pdb (Partial PDB)
           1 file(s) copied.
   The system cannot find the file specified.
           1 file(s) copied.

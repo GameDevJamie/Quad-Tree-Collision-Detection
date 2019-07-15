@@ -73,11 +73,11 @@ bool LoadMaterials(render::RenderEngine* renderer)
 
 	mat = renderer->LoadMaterial("NonCollidedMat");
 	mat->SetShader(render::EShaderTechnique::ONE_COLOUR);
-	mat->SetDiffuseColour(math::Vector3::kRed);
+	mat->SetDiffuseColour(math::Vector3::kBlack);
 
 	mat = renderer->LoadMaterial("CollidedMat");
 	mat->SetShader(render::EShaderTechnique::ONE_COLOUR);
-	mat->SetDiffuseColour(math::Vector3::kGreen);
+	mat->SetDiffuseColour(math::Vector3::kBlue);
 	mat->SetRasterizerState(render::ERasterizerState::BACK);
 
 	return true;

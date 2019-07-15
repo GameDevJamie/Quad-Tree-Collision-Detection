@@ -39,6 +39,7 @@ class CollisionSystem : public WorldSystem
 		virtual void Update(const World& world, TFloat32 deltaTime)
 		{
 			//ProcessNormalCollisions(world);
+			ProcessQuadTreeCollisions(world);
 		}
 
 	private:
@@ -58,7 +59,7 @@ class CollisionSystem : public WorldSystem
 
 				bool collided = false;
 
-				for (int j = 1; j < m_Entities.size(); ++j)
+				for (int j = 0; j < m_Entities.size(); ++j)
 				{
 					if (j == i) continue;
 
@@ -79,5 +80,56 @@ class CollisionSystem : public WorldSystem
 				}
 				else meshComp->SetCustomMaterial(0, travellerComp->NonCollidedMat);
 			}
+		}
+
+		void ProcessQuadTreeCollisions(const World& world)
+		{
+			auto qTree = world.GetEntityManager()->GetComponent<GlobalComponentData>()->QuadTree.get();
+			EntityManager* EntityManager = world.GetEntityManager();
+
+			qTree->BeginEnum();
+
+			std::vector<math::SQuadTreeNode<TEntityUID>> list;
+			while (qTree->Enumerate(list))
+			{
+				for (int i = 0; i < list.size(); ++i)
+				{
+					//Entity to check for collisions with another Traveller
+					Entity entity1 = Entity(list[i].data);
+					auto transformComp = EntityManager->GetComponent<TransformComponentData>(entity1);
+					auto travellerComp = EntityManager->GetComponent<TravellerComponentData>(entity1);
+					auto meshComp = EntityManager->GetComponent<StaticMeshComponentData>(entity1);
+
+					bool collided = false;
+
+					for (int j = 0; j < list.size(); ++j)
+					{
+						if (j == i) continue;
+
+						Entity entity2 = Entity(list[j].data);
+						auto transformComp2 = EntityManager->GetComponent<TransformComponentData>(entity2);
+
+						//Check if collided (If forget why boxSize is 2.0f instead of 1.0f, look at AABB struct, divides it by 2)
+						//if (math::BoxToBoxCollision(transformComp->GetTransform().GetPosition(), 2.0f, transformComp2->GetTransform().GetPosition(), 2.0f))
+						//{
+						//	collided = true;
+						//	break;
+						//}
+						if (math::SphereToSphereCollision(transformComp->GetTransform().GetPosition(), transformComp2->GetTransform().GetPosition(), 1.0f, 1.0f))
+						{
+							collided = true;
+							break;
+						}
+					}
+
+					if (collided)
+					{
+						meshComp->SetCustomMaterial(0, travellerComp->CollidedMat);
+					}
+					else meshComp->SetCustomMaterial(0, travellerComp->NonCollidedMat);
+				}
+			}
+
+			qTree->EndEnum();
 		}
 };
