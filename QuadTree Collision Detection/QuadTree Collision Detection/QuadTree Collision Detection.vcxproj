@@ -81,9 +81,17 @@
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Genesis\bin\AntTweakBar.dll" "$(OutDir)"
-copy "$(SolutionDir)Genesis\bin\Assimp.dll" "$(OutDir)"
-copy "$(SolutionDir)Genesis\bin\assimp-vc140-mt.dll" "$(OutDir)"</Command>
+copy "$(SolutionDir)Genesis\bin\Assimp32.dll" "$(OutDir)"
+copy "$(SolutionDir)Genesis\bin\assimp-vc140-mt.dll" "$(OutDir)"
+
+copy "$(SolutionDir)Genesis\Shaders" "$(ProjectDir)Shaders"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy "$(SolutionDir)Genesis\lib\AntTweakBar.lib" "$(ProjectDir)"
+copy "$(SolutionDir)Genesis\lib\assimp.lib" "$(ProjectDir)"
+copy "$(SolutionDir)Genesis\lib\d3dx11.lib" "$(ProjectDir)"
+copy "$(SolutionDir)Genesis\lib\Genesis.lib" "$(ProjectDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -106,9 +114,17 @@ copy "$(SolutionDir)Genesis\bin\assimp-vc140-mt.dll" "$(OutDir)"</Command>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)Genesis\bin\AntTweakBar.dll" "$(OutDir)"
-copy "$(SolutionDir)Genesis\bin\Assimp.dll" "$(OutDir)"
-copy "$(SolutionDir)Genesis\bin\assimp-vc140-mt.dll" "$(OutDir)"</Command>
+copy "$(SolutionDir)Genesis\bin\Assimp32.dll" "$(OutDir)"
+copy "$(SolutionDir)Genesis\bin\assimp-vc140-mt.dll" "$(OutDir)"
+
+copy "$(SolutionDir)Genesis\Shaders" "$(ProjectDir)Shaders"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>copy "$(SolutionDir)Genesis\lib\AntTweakBar.lib" "$(ProjectDir)"
+copy "$(SolutionDir)Genesis\lib\assimp.lib" "$(ProjectDir)"
+copy "$(SolutionDir)Genesis\lib\d3dx11.lib" "$(ProjectDir)"
+copy "$(SolutionDir)Genesis\lib\Genesis.lib" "$(ProjectDir)"</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -129,6 +145,8 @@ copy "$(SolutionDir)Genesis\bin\assimp-vc140-mt.dll" "$(OutDir)"</Command>
   <ItemGroup>
     <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="CollisionSystem.h" />
+    <ClInclude Include="ColourSystem.h" />
+    <ClInclude Include="FloorSystem.h" />
     <ClInclude Include="GlobalComponentData.h" />
     <ClInclude Include="MovementSystem.h" />
     <ClInclude Include="QuadTreeBuilderSystem.h" />

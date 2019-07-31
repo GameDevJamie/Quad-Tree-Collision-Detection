@@ -33,7 +33,7 @@ class SpawnerSystem : public WorldSystem
 			
 			//Setup GUI Data
 			mp_GlobalData = world.GetEntityManager()->GetComponent<GlobalComponentData>();
-			mp_GlobalData->GUIBar->AddVarRW("Spawned", EType::INT32, &m_NumEntities, "group='Travellers' min=0 max=1000 keyincr== keydecr=-");
+			mp_GlobalData->GetGUIBar()->AddVarRW("Spawned", EType::INT32, &m_NumEntities, "group='Travellers' min=0 max=1000 keyincr== keydecr=-");
 		}
 
 		//Called when there has been a change to the world (New Entity/Component created/destroyed)
@@ -47,6 +47,24 @@ class SpawnerSystem : public WorldSystem
 		//Called when the System is Updated (Per Frame)
 		virtual void Update(const World& world, TFloat32 deltaTime)
 		{
+			//Spawn by mouse click
+			if (input::IsKeyHeld(input::EKeyCode::MOUSE_LBTN))
+			{
+				auto cameraComp = world.GetEntityManager()->GetComponent<CameraComponentData>();
+				auto ray = cameraComp->GetCamera()->GetRay(input::MousePosition());
+
+				auto cameraPos = math::Vector3::kYAxis * 190.0f;
+
+				auto spawnPos = FindFloorPoint(ray, cameraPos);
+				spawnPos.y = 0.0f;
+
+				SpawnTravellerEntity(world, spawnPos);
+
+				m_NumEntities++;
+				m_CurrentSpawned++;
+				return;
+			}
+
 			TInt32 toSpawn = m_NumEntities - m_CurrentSpawned;
 			if (toSpawn == 0) return;	//No New Entities need spawning
 
@@ -56,9 +74,7 @@ class SpawnerSystem : public WorldSystem
 				for (int i = 0; i < toSpawn; ++i)
 				{
 					//Randomise Position
-					math::Vector3 minSpawn = mp_GlobalData->MinSpawn;
-					math::Vector3 maxSpawn = mp_GlobalData->MaxSpawn;
-					math::Vector3 randomPos = math::Random(minSpawn, maxSpawn);
+					math::Vector3 randomPos = math::Random(mp_GlobalData->GetMinSpawn(), mp_GlobalData->GetMaxSpawn());
 
 					SpawnTravellerEntity(world, randomPos);
 
@@ -87,16 +103,38 @@ class SpawnerSystem : public WorldSystem
 
 			Entity entity = EntityManager->CreateEntity();
 			EntityManager->AddComponent<TransformComponentData>(entity, pos);
-			EntityManager->AddComponent<StaticMeshComponentData>(entity, world.GetRenderer()->LoadMesh(render::EMeshPrimitiveTypes::SPHERE))->SetCustomMaterial(0, world.GetRenderer()->LoadMaterial("NonCollidedMat"));
+			EntityManager->AddComponent<StaticMeshComponentData>(entity, world.GetRenderer()->LoadMesh(render::EMeshPrimitiveTypes::CUBE))->SetCustomMaterial(0, world.GetRenderer()->LoadMaterial("NonCollidedMat"));
 			
 			auto travellerData = EntityManager->AddComponent<TravellerComponentData>(entity);
 			travellerData->PointA = pos;
-			
-			math::Vector3 minSpawn = mp_GlobalData->MinSpawn;
-			math::Vector3 maxSpawn = mp_GlobalData->MaxSpawn;
-			travellerData->PointB = math::Random(minSpawn, maxSpawn);
+			travellerData->PointB = math::Random(mp_GlobalData->GetMinSpawn(), mp_GlobalData->GetMaxSpawn());
 
 			travellerData->NonCollidedMat = world.GetRenderer()->LoadMaterial("NonCollidedMat");
 			travellerData->CollidedMat = world.GetRenderer()->LoadMaterial("CollidedMat");
+
+			//Point Light to shine when collided
+			EntityManager->AddComponent<LightComponentData>(entity, render::ELightType::POINT);
+		}
+
+		//Find Point where Ray intersects with Ground (y = 0)
+		math::Vector3 FindFloorPoint(const math::Vector3& ray, const math::Vector3& cameraPos)
+		{
+			if (ray.y > 0.0f) return math::Vector3::kZero;
+			TFloat32 distance = BinarySearch(0, 0, 1000, ray, cameraPos);
+			return cameraPos + (ray * distance);
+		}
+
+		//Get Ray Distance Multiplier
+		TFloat32 BinarySearch(int count, const TFloat32& start, const TFloat32& finish, const math::Vector3& ray, const math::Vector3& cameraPos)
+		{
+			TFloat32 half = start + ((finish - start) / 2.0f);
+			if (count >= 100)
+			{
+				return half;
+			}
+
+			math::Vector3 scaledRay = cameraPos + (ray * half);
+			if (scaledRay.y > 0.0f) return BinarySearch(count + 1, half, finish, ray, cameraPos);
+			else return BinarySearch(count + 1, start, half, ray, cameraPos);
 		}
 };

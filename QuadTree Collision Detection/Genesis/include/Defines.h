@@ -50,7 +50,9 @@ enum class EType
 	COLOR3,
 	COLOR4,
 
-	QUAT4
+	QUAT4,
+
+	DIR3
 };
 
 //Fixed Size Types

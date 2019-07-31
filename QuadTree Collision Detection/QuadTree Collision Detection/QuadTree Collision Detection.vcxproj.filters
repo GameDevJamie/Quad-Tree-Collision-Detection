@@ -47,5 +47,11 @@
     <ClInclude Include="QuadTreeBuilderSystem.h">
       <Filter>Source Files\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="FloorSystem.h">
+      <Filter>Source Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="ColourSystem.h">
+      <Filter>Source Files\Systems</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

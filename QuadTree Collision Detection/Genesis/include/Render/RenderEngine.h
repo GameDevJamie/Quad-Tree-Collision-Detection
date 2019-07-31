@@ -116,6 +116,10 @@ namespace Genesis
 
 				//Set the colour to display as the background when the back-buffer is cleared
 				virtual void SetBackgroundColour(const math::Vector3&) = 0;
+
+				//Resets the Buffers to fit the current window size.
+				//Should only be called if cruical
+				virtual bool ResizeBuffers() = 0;
 		};
 	}
 }

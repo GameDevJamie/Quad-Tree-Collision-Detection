@@ -31,8 +31,8 @@ class QuadTreeBuilderSystem : public WorldSystem
 			m_Draw = true;
 
 			auto globalData = world.GetEntityManager()->GetComponent<GlobalComponentData>();
-			globalData->GUIBar->AddVarRW("Max Layers", EType::INT32, &m_MaxLayers, "group='Quad Tree Data'");
-			globalData->GUIBar->AddVarRW("Draw Tree", EType::BOOL, &m_Draw, "group='Quad Tree Data'");
+			globalData->GetGUIBar()->AddVarRW("Max Layers", EType::INT32, &m_MaxLayers, "group='Quad Tree Data'");
+			globalData->GetGUIBar()->AddVarRW("Draw Tree", EType::BOOL, &m_Draw, "group='Quad Tree Data'");
 
 			ComponentGroup group;
 			group.AddFilter<TravellerComponentData>();
@@ -52,7 +52,7 @@ class QuadTreeBuilderSystem : public WorldSystem
 		//Called when the System is Updated (Per Frame)
 		virtual void Update(const World& world, TFloat32 deltaTime)
 		{
-			auto qTree = world.GetEntityManager()->GetComponent<GlobalComponentData>()->QuadTree.get();
+			auto qTree = world.GetEntityManager()->GetComponent<GlobalComponentData>()->GetQuadTree();
 
 			//Clear QuadTree
 			qTree->Reset();
@@ -66,6 +66,7 @@ class QuadTreeBuilderSystem : public WorldSystem
 				qTree->Insert(math::SQuadTreeNode<TEntityUID>(entity.UID, math::Vector2(pos.x, pos.z)));
 			}
 
+			//Draw Quad Tree
 			if (m_Draw)
 			{
 				auto terrainComp = world.GetEntityManager()->GetComponent<TerrainGridComponentData>(m_TerrainEntity);

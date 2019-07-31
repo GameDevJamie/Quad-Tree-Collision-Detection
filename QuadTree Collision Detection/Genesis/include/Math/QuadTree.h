@@ -43,8 +43,8 @@ namespace Genesis
 				//TRUE = Quadtree has been Sub-Divided, new points added are inserted into the children quadtrees
 				bool m_Divided;
 
-				TFloat32 m_MaxPoints;		//Maximum Number of points allowed in the tree
-				TInt32 m_MaxLayers;			//How deep can the QuadTree be
+				TInt32 m_MaxPoints;				//Maximum Number of points allowed in the tree
+				TInt32 m_MaxLayers;				//How deep can the QuadTree be
 				TInt32 m_CurrentLayer;		//How far down this QuadTree is so far (How many times it has been divided)
 
 				std::vector<SQuadTreeNode<T>> m_List;	//Points and data contained here
@@ -91,6 +91,7 @@ namespace Genesis
 				//------------------------------
 
 				inline AABB GetAABB() const { return m_AABB; }
+				inline TFloat32 GetSize() const { return m_AABB.Size.x; }
 
 				//Returns a list of Box Data for each Quad Tree divided
 				//Can be used for a visual representation of QuadTree
@@ -126,6 +127,14 @@ namespace Genesis
 
 					return list;
 				}
+
+				//------------------------------
+
+
+				//MUTATORS
+				//------------------------------
+
+				inline void SetSize(const TFloat32& size) { m_AABB.SetSize(math::Vector2(size, size)); }
 
 				//------------------------------
 
@@ -197,10 +206,26 @@ namespace Genesis
 
 				void Reset()
 				{
-					if (mp_TopLeft) delete(mp_TopLeft);
-					if (mp_TopRight) delete(mp_TopRight);
-					if (mp_BottomLeft) delete(mp_BottomLeft);
-					if (mp_BottomRight) delete(mp_BottomRight);
+					if (mp_TopLeft)
+					{
+						delete(mp_TopLeft);
+						mp_TopLeft = nullptr;
+					}
+					if (mp_TopRight)
+					{
+						delete(mp_TopRight);
+						mp_TopRight = nullptr;
+					}
+					if (mp_BottomLeft)
+					{
+						delete(mp_BottomLeft);
+						mp_BottomLeft = nullptr;
+					}
+					if (mp_BottomRight)
+					{
+						delete(mp_BottomRight);
+						mp_BottomRight = nullptr;
+					}
 
 					m_List.clear();
 					m_Divided = false;

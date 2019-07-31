@@ -53,6 +53,21 @@ namespace Genesis
 
 				//----------------------------
 
+				void SetSize(const math::Vector2& size)
+				{
+					Size = math::Vector3(size, 0.0f);
+
+					Min = Centre - (Size / 2.0f);
+					Max = Centre + (Size / 2.0f);
+				}
+				void SetSize(const math::Vector3& size)
+				{
+					Size = size;
+
+					Min = Centre - (Size / 2.0f);
+					Max = Centre + (Size / 2.0f);
+				}
+
 				//Returns true if the given Point is inside the Box
 				bool Contains(const math::Vector2& point) const
 				{

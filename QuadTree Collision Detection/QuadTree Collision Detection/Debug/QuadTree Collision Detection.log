@@ -1,20 +1,40 @@
-﻿  main.cpp
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(51): warning C4018: '<': signed/unsigned mismatch
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(62): warning C4018: '<': signed/unsigned mismatch
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(95): warning C4018: '<': signed/unsigned mismatch
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(105): warning C4018: '<': signed/unsigned mismatch
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(178): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
-  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(167): note: while compiling class template member function 'void Genesis::math::QuadTree<TEntityUID>::SubDivide(void)'
-  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(159): note: see reference to function template instantiation 'void Genesis::math::QuadTree<TEntityUID>::SubDivide(void)' being compiled
-  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(90): note: see reference to class template instantiation 'Genesis::math::QuadTree<TEntityUID>' being compiled
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(179): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(180): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(181): warning C4244: 'argument': conversion from 'TFloat32' to 'const TInt32', possible loss of data
-d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(70): warning C4244: '=': conversion from 'const TInt32' to 'TFloat32', possible loss of data
-  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(60): note: while compiling class template member function 'Genesis::math::QuadTree<TEntityUID>::QuadTree(const Genesis::math::Vector2 &,const TFloat32 &,const TInt32 &,const TInt32 &,const TInt32 &)'
-  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(178): note: see reference to function template instantiation 'Genesis::math::QuadTree<TEntityUID>::QuadTree(const Genesis::math::Vector2 &,const TFloat32 &,const TInt32 &,const TInt32 &,const TInt32 &)' being compiled
+﻿          1 file(s) copied.
+          1 file(s) copied.
+          1 file(s) copied.
+          1 file(s) copied.
+  main.cpp
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(59): warning C4018: '<': signed/unsigned mismatch
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(70): warning C4018: '<': signed/unsigned mismatch
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(103): warning C4018: '<': signed/unsigned mismatch
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\collisionsystem.h(113): warning C4018: '<': signed/unsigned mismatch
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(161): warning C4018: '>=': signed/unsigned mismatch
+  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(145): note: while compiling class template member function 'bool Genesis::math::QuadTree<TEntityUID>::Insert(Genesis::math::SQuadTreeNode<T>)'
+          with
+          [
+              T=TEntityUID
+          ]
+  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\quadtreebuildersystem.h(66): note: see reference to function template instantiation 'bool Genesis::math::QuadTree<TEntityUID>::Insert(Genesis::math::SQuadTreeNode<T>)' being compiled
+          with
+          [
+              T=TEntityUID
+          ]
+  d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\quadtree collision detection\globalcomponentdata.h(37): note: see reference to class template instantiation 'Genesis::math::QuadTree<TEntityUID>' being compiled
+d:\documents\repositories\quad-tree-collision-detection\quadtree collision detection\genesis\include\math\quadtree.h(166): warning C4018: '>': signed/unsigned mismatch
   QuadTree Collision Detection.vcxproj -> D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Debug\QuadTree Collision Detection.exe
   QuadTree Collision Detection.vcxproj -> D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Debug\QuadTree Collision Detection.pdb (Partial PDB)
           1 file(s) copied.
-  The system cannot find the file specified.
           1 file(s) copied.
+          1 file(s) copied.
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\Colour_PS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\Font_PS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\Font_VS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\InvertColour_PS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\ParticleFaceCamera_GS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\ParticleUpdate_GS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\Particle_PS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\Particle_VS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\PassParticle_VS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\PerPixelLighting_PS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\TexOnly_PS.cso
+  D:\Documents\Repositories\Quad-Tree-Collision-Detection\QuadTree Collision Detection\Genesis\Shaders\Transform_VS.cso
+         12 file(s) copied.

@@ -9,6 +9,8 @@
 #include "MovementSystem.h"
 #include "CollisionSystem.h"
 #include "QuadTreeBuilderSystem.h"
+#include "FloorSystem.h"
+#include "ColourSystem.h"
 
 using namespace Genesis;
 using namespace Genesis::entity;
@@ -32,8 +34,10 @@ int main()
 
 	//Set Backgroud Colour
 	engine->GetRenderer()->SetBackgroundColour(math::Vector3(0.06f, 0.69f, 0.98f));
+	engine->GetRenderer()->SetAmbientLighting(math::Vector3::kGrey * 0.5f);
 
 	World* world = engine->GetWorldManager()->CreateWorld("World");
+	world->SetAmbientLighting(math::Vector3::kGrey * 0.5f);
 
 	if (!LoadMaterials(engine->GetRenderer()) || !SetupScene(world))
 	{
@@ -42,12 +46,15 @@ int main()
 	}
 
 	//Add Systems
+	world->AddSystem<Lighting3DSystem>();	//Lighting must go first
 	world->AddSystem<Render3DSystem>();
-	world->AddSystem<CameraSystem>();
+	//world->AddSystem<CameraSystem>();
+	world->AddSystem<FloorSystem>();
 	world->AddSystem<SpawnerSystem>();
 	world->AddSystem<MovementSystem>();
 	world->AddSystem<CollisionSystem>();
 	world->AddSystem<QuadTreeBuilderSystem>();
+	world->AddSystem<ColourSystem>();
 
 	while (engine->IsRunning())
 	{
@@ -68,8 +75,9 @@ int main()
 bool LoadMaterials(render::RenderEngine* renderer)
 {
 	auto mat = renderer->LoadMaterial("FloorMat");
-	mat->SetShader(render::EShaderTechnique::ONE_COLOUR);
-	mat->SetDiffuseColour(math::Vector3::kWhite);
+	mat->SetShader(render::EShaderTechnique::STANDARD);
+	mat->SetMainTexture(renderer->LoadTexture("White.png"));
+	mat->SetDiffuseColour(math::Vector3::kOne * 0.3f);
 
 	mat = renderer->LoadMaterial("NonCollidedMat");
 	mat->SetShader(render::EShaderTechnique::ONE_COLOUR);
@@ -77,8 +85,7 @@ bool LoadMaterials(render::RenderEngine* renderer)
 
 	mat = renderer->LoadMaterial("CollidedMat");
 	mat->SetShader(render::EShaderTechnique::ONE_COLOUR);
-	mat->SetDiffuseColour(math::Vector3::kBlue);
-	mat->SetRasterizerState(render::ERasterizerState::BACK);
+	mat->SetDiffuseColour(math::Vector3::kGreen);
 
 	return true;
 }
@@ -86,33 +93,33 @@ bool LoadMaterials(render::RenderEngine* renderer)
 //Create the Entities and load the starting scene
 bool SetupScene(World* world)
 {
-	const TFloat32 floorSize = 50.0f;
 	EntityManager* EntityManager = world->GetEntityManager();
 
 	//Create GUI Bar
 	auto guiBar = world->GetRenderer()->CreateGUIBar("GUI");
 	guiBar->SetTitle("GUI");
-	guiBar->AddVarRW("FPS", EType::FLOAT, &fps, "group='FPS'");
+	guiBar->AddVarRW("FPS", EType::FLOAT, &fps);
 	guiBar->DefineBar("refresh=1");	//Refresh bar every second (For FPS)
-	
 
 	//Create Global Entity (Holds GUI Bar)
 	Entity globalEntity = EntityManager->CreateEntity();
 	auto globalData = EntityManager->AddComponent<GlobalComponentData>(globalEntity, guiBar);
-	globalData->MinSpawn = math::Vector3::kOne * -(floorSize - 5.0f);
-	globalData->MinSpawn.y = 0.0f;
-	globalData->MaxSpawn = math::Vector3::kOne * (floorSize - 5.0f);
-	globalData->MaxSpawn.y = 0.0f;
 
 	//Create Camera Entity
 	Entity cameraEntity = EntityManager->CreateEntity();
-	EntityManager->AddComponent<TransformComponentData>(cameraEntity, math::Vector3::kYAxis * 100.0f, math::Quaternion::Euler(90.0f, 0.0f, 0.0f));
+	EntityManager->AddComponent<TransformComponentData>(cameraEntity, math::Vector3::kYAxis * 190.0f, math::Quaternion::Euler(90.0f, 0.0f, 0.0f));
 	EntityManager->AddComponent<CameraComponentData>(cameraEntity);
 
-	//Create Floor Entity
-	Entity floorEntity = EntityManager->CreateEntity();
-	EntityManager->AddComponent<TransformComponentData>(floorEntity, math::Vector3(0.0f, -0.1f, 0.0f), math::Quaternion::Euler(90.0f, 0.0f, 0.0f), math::Vector3::kOne * floorSize);
-	EntityManager->AddComponent<StaticMeshComponentData>(floorEntity, world->GetRenderer()->LoadMesh(render::EMeshPrimitiveTypes::SQUARE))->SetCustomMaterial(0, world->GetRenderer()->LoadMaterial("FloorMat"));
+
+	//Setup Lighting
+	//Entity lightEntity = EntityManager->CreateEntity();
+	//EntityManager->AddComponent<TransformComponentData>(lightEntity);
+	//auto lightComp = EntityManager->AddComponent<LightComponentData>(lightEntity, render::ELightType::DIRECTIONAL);
+	//lightComp->Brightness = 10.0f;
+	//lightComp->Colour = math::Vector3::kWhite;
+	//lightComp->Direction = math::Vector3(-1.0f, -1.0f, -1.0f);
+	//
+	//guiBar->AddVarRW("Light Direction", EType::DIR3, &lightComp->Direction, "group='Lighting'");
 
 	return true;
 }

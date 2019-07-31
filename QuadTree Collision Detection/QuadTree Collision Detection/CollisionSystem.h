@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Genesis.h>
+#include "GlobalComponentData.h"
 #include "TravellerComponentData.h"
 
 using namespace Genesis;
@@ -11,6 +12,8 @@ class CollisionSystem : public WorldSystem
 	private:
 		EntityList m_Entities;
 
+		bool m_QuadTreeCollisions;
+
 	public:
 		CollisionSystem() {}
 		~CollisionSystem() {}
@@ -18,11 +21,16 @@ class CollisionSystem : public WorldSystem
 		//Called when the System is created/Initialised
 		virtual void Start(const World& world)
 		{
+			m_QuadTreeCollisions = true;
+
 			ComponentGroup group;
 			group.AddFilter<StaticMeshComponentData>();
 			group.AddFilter<TravellerComponentData>();
 
 			m_Entities = world.GetEntityManager()->GetEntities(group);
+
+			auto globalData = world.GetEntityManager()->GetComponent<GlobalComponentData>();
+			globalData->GetGUIBar()->AddVarRW("Enable Quad Tree", EType::BOOL, &m_QuadTreeCollisions, "group='Collisions'");
 		}
 
 		//Called when there has been a change to the world (New Entity/Component created/destroyed)
@@ -38,8 +46,8 @@ class CollisionSystem : public WorldSystem
 		//Called when the System is Updated (Per Frame)
 		virtual void Update(const World& world, TFloat32 deltaTime)
 		{
-			//ProcessNormalCollisions(world);
-			ProcessQuadTreeCollisions(world);
+			if(!m_QuadTreeCollisions) ProcessNormalCollisions(world);
+			else ProcessQuadTreeCollisions(world);
 		}
 
 	private:
@@ -84,7 +92,7 @@ class CollisionSystem : public WorldSystem
 
 		void ProcessQuadTreeCollisions(const World& world)
 		{
-			auto qTree = world.GetEntityManager()->GetComponent<GlobalComponentData>()->QuadTree.get();
+			auto qTree = world.GetEntityManager()->GetComponent<GlobalComponentData>()->GetQuadTree();
 			EntityManager* EntityManager = world.GetEntityManager();
 
 			qTree->BeginEnum();
@@ -110,23 +118,26 @@ class CollisionSystem : public WorldSystem
 						auto transformComp2 = EntityManager->GetComponent<TransformComponentData>(entity2);
 
 						//Check if collided (If forget why boxSize is 2.0f instead of 1.0f, look at AABB struct, divides it by 2)
-						//if (math::BoxToBoxCollision(transformComp->GetTransform().GetPosition(), 2.0f, transformComp2->GetTransform().GetPosition(), 2.0f))
-						//{
-						//	collided = true;
-						//	break;
-						//}
-						if (math::SphereToSphereCollision(transformComp->GetTransform().GetPosition(), transformComp2->GetTransform().GetPosition(), 1.0f, 1.0f))
+						if (math::BoxToBoxCollision(transformComp->GetTransform().GetPosition(), 2.0f, transformComp2->GetTransform().GetPosition(), 2.0f))
 						{
 							collided = true;
 							break;
 						}
+						//if (math::SphereToSphereCollision(transformComp->GetTransform().GetPosition(), transformComp2->GetTransform().GetPosition(), 1.0f, 1.0f))
+						//{
+						//	collided = true;
+						//	break;
+						//}
 					}
 
 					if (collided)
 					{
 						meshComp->SetCustomMaterial(0, travellerComp->CollidedMat);
 					}
-					else meshComp->SetCustomMaterial(0, travellerComp->NonCollidedMat);
+					else
+					{
+						meshComp->SetCustomMaterial(0, travellerComp->NonCollidedMat);
+					}
 				}
 			}
 

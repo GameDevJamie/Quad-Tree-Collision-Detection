@@ -23,7 +23,7 @@ class MovementSystem : public WorldSystem
 		//Called when the System is created/Initialised
 		virtual void Start(const World& world)
 		{
-			m_MoveSpeed = 5.0f;
+			m_MoveSpeed = 3.0f;
 			m_Paused = false;
 
 			ComponentGroup group;
@@ -34,8 +34,8 @@ class MovementSystem : public WorldSystem
 
 			//Setup GUI Data for Movement
 			mp_GlobalData = world.GetEntityManager()->GetComponent<GlobalComponentData>();
-			mp_GlobalData->GUIBar->AddVarRW("Move Speed", EType::FLOAT, &m_MoveSpeed, "group='Travellers' min=1 max=20");
-			mp_GlobalData->GUIBar->AddVarRW("Pause", EType::BOOL, &m_Paused, "group='Travellers'");
+			mp_GlobalData->GetGUIBar()->AddVarRW("Move Speed", EType::FLOAT, &m_MoveSpeed, "group='Travellers' min=1 max=20");
+			mp_GlobalData->GetGUIBar()->AddVarRW("Pause", EType::BOOL, &m_Paused, "group='Travellers'");
 		}
 
 		//Called when there has been a change to the world (New Entity/Component created/destroyed)
@@ -70,9 +70,7 @@ class MovementSystem : public WorldSystem
 					travellerData->PointA = travellerData->PointB;
 					transComp->GetTransform().SetPosition(travellerData->PointA);
 
-					math::Vector3 minSpawn = mp_GlobalData->MinSpawn;
-					math::Vector3 maxSpawn = mp_GlobalData->MaxSpawn;
-					travellerData->PointB = math::Random(minSpawn, maxSpawn);
+					travellerData->PointB = math::Random(mp_GlobalData->GetMinSpawn(), mp_GlobalData->GetMaxSpawn());
 
 					travellerData->Alpha = 0.0f;
 				}

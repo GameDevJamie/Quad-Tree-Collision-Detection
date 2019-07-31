@@ -34,8 +34,8 @@ class CameraSystem : public WorldSystem
 
 			//Add Camera data to GUI Bar
 			auto globalData = world.GetEntityManager()->GetComponent<GlobalComponentData>();
-			globalData->GUIBar->AddVarRW("Camera Speed", EType::FLOAT, &m_MoveSpeed, "group='Camera'");
-			globalData->GUIBar->AddVarRW("Bird Eye Mode", EType::BOOL, &m_BirdEyeMode, "group='Camera'");
+			globalData->GetGUIBar()->AddVarRW("Camera Speed", EType::FLOAT, &m_MoveSpeed, "group='Camera'");
+			//globalData->GetGUIBar()->AddVarRW("Bird Eye Mode", EType::BOOL, &m_BirdEyeMode, "group='Camera'");
 		}
 
 		//Called when there has been a change to the world (New Entity/Component created/destroyed)
@@ -80,7 +80,7 @@ class CameraSystem : public WorldSystem
 			Entity cameraEntity = m_Entities[0];
 
 			auto transComp = world.GetEntityManager()->GetComponent<TransformComponentData>(cameraEntity);
-			transComp->GetTransform().SetPosition(math::Vector3::kYAxis * 100.0f);
+			transComp->GetTransform().SetPosition(math::Vector3::kYAxis * 190.0f);
 			transComp->GetTransform().SetRotation(math::Quaternion::Euler(90.0f, 0.0f, 0.0f));
 		}
 };

@@ -40,7 +40,7 @@ namespace Genesis
 					EntityList entities;
 				};
 
-				SGroup m_PointLightsGroup;
+				SGroup m_LightsGroup;
 		};
 	}
 }

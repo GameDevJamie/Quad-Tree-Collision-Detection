@@ -10,42 +10,32 @@ namespace Genesis
 	{
 		class LightComponentData : public ComponentData
 		{
-			private:
-				render::ELightType m_LightType;
-
-				math::Vector3 m_Colour;			//Colour of point light
-				TFloat32 m_Brightness;			//How bright is the light
-				
-
 			public:
+				render::ELightType LightType;
+
+				math::Vector3 Colour;			//Colour of point light
+				math::Vector3 Direction;	//Direction the light is facing (For Spot and Directional lights)
+
+				TFloat32 Brightness;			//How bright is the light
+			
+
 				//CONSTRUCTOR/DESTRUCTOR
 				//------------------------------
 
 				LightComponentData
 				(
+					const render::ELightType& lightType,
 					const math::Vector3& colour = math::Vector3::kWhite,
 					TFloat32 brightness = 10.0f
-				);
+				)
+				{
+					LightType = lightType;
+					Colour = colour;
+					Direction = math::Vector3::kZero;
+					Brightness = brightness;
+				}
 
-				virtual ~LightComponentData();
-
-				//------------------------------
-
-
-				//ACCESSORS
-				//------------------------------
-
-				math::Vector3 GetColour();
-				TFloat32 GetBrightness();
-
-				//------------------------------
-
-
-				//MUTATORS
-				//--------------------------------
-				void SetColour(const math::Vector3&);
-				void SetBrightness(const TFloat32&);
-				//--------------------------------
+				~LightComponentData() {}
 		};
 	}
 }
